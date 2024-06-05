@@ -15,16 +15,12 @@ type SignUpTypes = {
 type AuthContextTypes = {
   signIn: (params: SignInTypes) => Promise<boolean | void>;
   signUp: (params: SignUpTypes) => Promise<boolean | void>;
-
   isLoading: boolean;
   userAuthID: string;
   signOut: () => void;
-  
 };
 
-export const AuthContext = createContext<AuthContextTypes>(
-  {} as AuthContextTypes
-);
+export const AuthContext = createContext<AuthContextTypes>({} as AuthContextTypes);
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const [isLoading, setIsLoading] = useState(false);
@@ -44,10 +40,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
         setUserAuthID(res.data.id);
 
-        localStorage.setItem(
-          "@task_manager:userID",
-          JSON.stringify(res.data.id)
-        );
+        localStorage.setItem("@task_manager:userID", JSON.stringify(res.data.id));
 
         return true;
       })
@@ -56,6 +49,35 @@ export function AuthProvider({ children }: PropsWithChildren) {
           alert(error.response.data.message);
         } else {
           alert("Erro ao fazer login!");
+        }
+
+        console.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
+
+  async function signUp({ name, email, password }: SignUpTypes) {
+    if (!name || !email || !password)
+      throw alert("Por favor informar nome, email e senha!");
+
+    setIsLoading(true);
+
+    return API.post("/user", {
+      name,
+      email,
+      password,
+    })
+      .then((res) => {
+        alert(res.data.message);
+        return true;
+      })
+      .catch((error) => {
+        if (error.response) {
+          alert(error.response.data.message);
+        } else {
+          alert("Erro ao criar usuário!");
         }
 
         console.error(error);
@@ -75,36 +97,6 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
     if (userID) setUserAuthID(userID);
   }, []);
-
-  async function signUp({ name, email, password }: SignUpTypes) {
-    if (!name || !email || !password)
-      throw alert("Por favor informar email e senha!");
-
-    setIsLoading(true);
-
-    return API.post("/user", {
-      name,
-      email,
-      password,
-    })
-      .then((res) => {
-        alert(res.data.message);
-
-        return true;
-      })
-      .catch((error) => {
-        if (error.response) {
-          alert(error.response.data.message);
-        } else {
-          alert("Erro ao criar usuário!");
-        }
-
-        console.error(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }
 
   return (
     <AuthContext.Provider value={{ signIn, isLoading, userAuthID, signOut, signUp }}>

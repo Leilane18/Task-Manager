@@ -5,27 +5,25 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useAuth } from "../../hooks/useAuth";
 
 export function FormSignUp() {
-  
   type InputTypes = {
     name: string;
     email: string;
     password: string;
   };
-  
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm<InputTypes>();
-  
-  const {signUp} = useAuth();
+
+  const { signUp } = useAuth();
   const navigate = useNavigate();
-  
 
   const onSubmit: SubmitHandler<InputTypes> = async (data) => {
     const userCreated = await signUp(data);
-    if(userCreated) {
+    if (userCreated) {
       navigate("/");
       reset();
     }

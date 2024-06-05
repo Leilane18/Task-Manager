@@ -13,9 +13,13 @@ export const appTheme = {
     PRIMARY600: "#2793F2",
     PRIMARY700: "#056CF2",
     COMPLEMENTARY: "#F2B450",
-    CHACK: "#17A68C",
+    CHECK: "#17A68C",
     DANGER100: "#402539",
     DANGER200: "#D94179",
     DANGER400: "#F25750",
+  },
+  size: {
+    MAIN_WIDTH_MOBILE: "80vw",
+    MAIN_WIDTH_DESKTOP: "70vw",
   },
 };
