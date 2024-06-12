@@ -7,7 +7,7 @@ export const Container = styled.li`
 
   &:hover {
     cursor: pointer;
-    background: ${({ theme }) => theme.colors.PRIMARY700} 44;
+    background: ${({ theme }) => theme.colors.PRIMARY700}44;
   }
 
   i {

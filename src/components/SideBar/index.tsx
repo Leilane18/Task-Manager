@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { Container } from "./styles";
 import { MenuItem } from "../MenuItem";
+import { Container } from "./styles";
 import { useAuth } from "../../hooks/useAuth";
 
 type SideBarTypes = {
@@ -14,11 +14,12 @@ export function SideBar({ toggleSideBar }: SideBarTypes) {
   function logoutApp() {
     const resp = confirm("Deseja sair da aplicação?");
 
-    if(resp) {
+    if (resp) {
       signOut();
       navigate("/");
     }
   }
+
   return (
     <Container onClick={toggleSideBar}>
       <div className="asideMenu" onClick={toggleSideBar}>
@@ -32,7 +33,7 @@ export function SideBar({ toggleSideBar }: SideBarTypes) {
               <MenuItem title="Home" icon="home" />
             </NavLink>
 
-            <NavLink to={"/tasks"} onClick={toggleSideBar}>
+            <NavLink to={"/tasks?filter=all&page=1"} onClick={toggleSideBar}>
               <MenuItem title="Tarefas" icon="task" />
             </NavLink>
 

@@ -10,6 +10,7 @@ export function Header() {
   function toggleSideBar() {
     setShowSideBar((prevState) => (prevState == true ? false : true));
   }
+
   return (
     <Container>
       <i className="material-icons menuIcon" onClick={toggleSideBar}>
@@ -17,7 +18,7 @@ export function Header() {
       </i>
       <div className="appLogo">
         <h1>Task Manager</h1>
-        <Link to={""}>
+        <Link to={"(https://emanuelquintino.github.io/Page-WDC/)"} target="_blank">
           <img src={logo} />
         </Link>
       </div>

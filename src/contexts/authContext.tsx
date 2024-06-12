@@ -90,12 +90,27 @@ export function AuthProvider({ children }: PropsWithChildren) {
   function signOut() {
     localStorage.removeItem("@task_manager:userID");
     setUserAuthID("");
+
+    API.post("/logout").catch((error) => {
+      console.error(error);
+    });
   }
 
   useEffect(() => {
     const userID = localStorage.getItem("@task_manager:userID");
 
-    if (userID) setUserAuthID(userID);
+    if (userID) {
+      const id = JSON.parse(userID);
+
+      API.get("/user")
+        .then((res) => {
+          if (id == res.data.id) setUserAuthID(id);
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response?.status == 401) signOut();
+        });
+    }
   }, []);
 
   return (

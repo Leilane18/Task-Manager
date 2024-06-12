@@ -1,14 +1,17 @@
 import styled from "styled-components";
 
-export type ButtonStyle = "primary" | "secondary";
+export type ButtonStyle = "primary" | "secondary" | "complementary" | "danger" | "check";
 
 type ButtonContainer = {
   variant: ButtonStyle;
 };
 
 const COLORS = {
+  check: "CHECK",
   primary: "PRIMARY700",
   secondary: "PRIMARY500",
+  complementary: "COMPLEMENTARY",
+  danger: "DANGER200",
 } as const;
 
 export const Container = styled.button<ButtonContainer>`
